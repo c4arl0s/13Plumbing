@@ -94,6 +94,36 @@ So, **blob objects** are how Git stores our file data, tree objects combine blob
 ![Screen Shot 2020-07-17 at 8 17 10](https://user-images.githubusercontent.com/24994818/87790269-ecb68e00-c805-11ea-92a9-50568665b06a.png)
 
 # 	* [Examine a Blob](https://github.com/c4arl0s/RysGitTutorial#rysgittutorial)
+
+Let's take a look at the blob associated with **blue.html** (be sure to change the following to the ID next to **blue.html** in **your** tree output.
+
+```console
+Sat Jul 18 ~/iOS/RysGitTutorialRepository 
+$ git cat-file blob 370563f1b719233e5d5a21914bb82e696af7cb4f
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>The Blue Page</title>
+  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+</head>
+<body>
+  <h1 style="color: #00F">The Blue Page</h1>
+  <p>Blue is the color of the sky.</p>
+</body>
+</html>
+```
+
+This should display the entire contents of **blue.html**, confirming that blobs really are plain data files. Note that blobs are pure content: **there is no mention of a file in the above output.** That is to say, the name **blue.html** is stored in the **tree that contains the blob, not the blob itself.
+
+You may recall from [The Basics]() that an SHA-1 checksum ensures an object's contents is never corrupted without Git knowing about it. Checksums work by using the object's contents to generate a unique character sequence. This not only functions as an identifier, it also guarantees that an object will not be silently corrupted (the altered content would generate different ID)
+
+When it comes to blob objects, this has an additional benefit. Since two blobs with the same data will have the same ID, Git **must** share blobs across multiple trees. For example, our **blue.html** file has not been changed since it was created, so our repository will only have a single associated blob, and all subsequent trees will refer to it. By not creating duplicate blobs for each tree object, Git vastly reduces the size of a repository. With this in mind, we can revise our Git object diagram to the following.
+
+![Screen Shot 2020-07-18 at 16 49 14](https://user-images.githubusercontent.com/24994818/87862517-a43ac580-c916-11ea-81b8-12965cd7b874.png)
+
+However, as soon as you change a single line in a file, Git must create a new blob object because its contents will have changed, resulting in a new SHA-1 checksum.
+
 # 	* [Examine a Tag](https://github.com/c4arl0s/RysGitTutorial#rysgittutorial)
 # 	* [Inspect Git's Branch Representation](https://github.com/c4arl0s/RysGitTutorial#rysgittutorial)
 # 	* [Explore the Object Database](https://github.com/c4arl0s/RysGitTutorial#rysgittutorial)
