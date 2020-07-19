@@ -1,23 +1,23 @@
-# 13PlumbingRysGitTutorial
+# 13 [Go back to content](https://github.com/c4arl0s/RysGitTutorial#rysgittutorial)
 
 13 Plumbing Rys Git Tutorial
 
 # 13. [Plumbing](https://github.com/c4arl0s/RysGitTutorial#13-plumbing-1)
- * [Examine Commit Details](https://github.com/c4arl0s/RysGitTutorial#-examine-commit-details)	
- * [Examine a tree](https://github.com/c4arl0s/RysGitTutorial#-examine-a-tree)
- * [Examine a Blob](https://github.com/c4arl0s/RysGitTutorial#-examine-a-blob)
- * [Examine a Tag](https://github.com/c4arl0s/RysGitTutorial#-examine-a-tag)
- * [Inspect Git's Branch Representation](https://github.com/c4arl0s/RysGitTutorial#-inspect-gits-branch-representation)
- * [Explore the Object Database](https://github.com/c4arl0s/RysGitTutorial#-explore-the-object-database)
- * [Collect the Garbage](https://github.com/c4arl0s/RysGitTutorial#-collect-the-garbage)
- * [Add Files to the index](https://github.com/c4arl0s/RysGitTutorial#-add-files-to-the-index)
- * [Store the Index in the Database](https://github.com/c4arl0s/RysGitTutorial#-store-the-index-in-the-database)
- * [Create a Commit Object](https://github.com/c4arl0s/RysGitTutorial#-create-a-commit-object)
- * [Update HEAD](https://github.com/c4arl0s/RysGitTutorial#-update-head)
- * [Conclusion](https://github.com/c4arl0s/RysGitTutorial#-conclusion-11)
- * [Quick Reference](https://github.com/c4arl0s/RysGitTutorial#-quick-reference-7)
+ * [Examine Commit Details](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-examine-commit-details)	
+ * [Examine a tree](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-examine-a-tree)
+ * [Examine a Blob](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-examine-a-blob)
+ * [Examine a Tag](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-examine-a-tag)
+ * [Inspect Git's Branch Representation](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-inspect-gits-branch-representation)
+ * [Explore the Object Database](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-explore-the-object-database)
+ * [Collect the Garbage](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-collect-the-garbage)
+ * [Add Files to the index](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-add-files-to-the-index)
+ * [Store the Index in the Database](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-store-the-index-in-the-database)
+ * [Create a Commit Object](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-create-a-commit-object)
+ * [Update HEAD](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-update-head)
+ * [Conclusion](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-conclusion)
+ * [Quick Reference](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-quick-reference)
 
-# 13. [Plumbing](https://github.com/c4arl0s/RysGitTutorial#rysgittutorial)
+# 13. [Plumbing](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
 
 In Rewriting History, I talked about the internal representation of a Git Repository. I may have mislead you a bit. While the reflog, interactive rebasing, end resetting may be more complex feature of Git, they are still considered part of the porcelain, as is every other command we have covered. In this module, we will take a look at Git's **plumbing** - The low level commands that give us access to Git's **true** internal representation of a project.
 
@@ -25,7 +25,7 @@ Unless you start hacking on Git's source code, you will probably never need to u
 
 We will start by inspecting Git's object database, then we will manually create and commit a snapshot using only Git's low-level interface.
 
-# 	* [Examine Commit Details](https://github.com/c4arl0s/RysGitTutorial#rysgittutorial)	
+# 	* [Examine Commit Details](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)	
 
 First, lets take a closer look at our latest commit with the **git cat-file** plumbing command
 
@@ -50,7 +50,7 @@ A **tree object** is Git's representation of the **snapshot** we have been talki
 
 Notice that each commit refers to one and only one tree objects. Form the **git cat-file** output, we can also infer that trees use SHA-1 chechsums for their ID's. This will be the case for all of Git's internal objects.
 
-# 	* [Examine a tree](https://github.com/c4arl0s/RysGitTutorial#rysgittutorial)
+# 	* [Examine a tree](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
 
 Next, let`s try to inspect a tree using the same **git cat-file** command. Make sure to change 
 
@@ -93,7 +93,7 @@ So, **blob objects** are how Git stores our file data, tree objects combine blob
 
 ![Screen Shot 2020-07-17 at 8 17 10](https://user-images.githubusercontent.com/24994818/87790269-ecb68e00-c805-11ea-92a9-50568665b06a.png)
 
-# 	* [Examine a Blob](https://github.com/c4arl0s/RysGitTutorial#rysgittutorial)
+# 	* [Examine a Blob](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
 
 Let's take a look at the blob associated with **blue.html** (be sure to change the following to the ID next to **blue.html** in **your** tree output.
 
@@ -124,15 +124,34 @@ When it comes to blob objects, this has an additional benefit. Since two blobs w
 
 However, as soon as you change a single line in a file, Git must create a new blob object because its contents will have changed, resulting in a new SHA-1 checksum.
 
-# 	* [Examine a Tag](https://github.com/c4arl0s/RysGitTutorial#rysgittutorial)
-# 	* [Inspect Git's Branch Representation](https://github.com/c4arl0s/RysGitTutorial#rysgittutorial)
-# 	* [Explore the Object Database](https://github.com/c4arl0s/RysGitTutorial#rysgittutorial)
-# 	* [Collect the Garbage](https://github.com/c4arl0s/RysGitTutorial#rysgittutorial)
-# 	* [Add Files to the index](https://github.com/c4arl0s/RysGitTutorial#rysgittutorial)
-# 	* [Store the Index in the Database](https://github.com/c4arl0s/RysGitTutorial#rysgittutorial)
-# 	* [Create a Commit Object](https://github.com/c4arl0s/RysGitTutorial#rysgittutorial)
-# 	* [Update HEAD](https://github.com/c4arl0s/RysGitTutorial#rysgittutorial)
-# 	* [Conclusion](https://github.com/c4arl0s/RysGitTutorial#rysgittutorial)
-# 	* [Quick Reference](https://github.com/c4arl0s/RysGitTutorial#rysgittutorial)
+# 	* [Examine a Tag](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
+
+The fourth and final type of Git object is the **tag object**. We can use the same **git cat-file** command to show the details of a tag.
+
+```console
+Sun Jul 19 ~/iOS/RysGitTutorialRepository 
+$ git cat-file tag v2.0
+object 49baa6e81a7ad87714540ec9ce9fceaaa12409c1
+type commit
+tag v2.0
+tagger c4arl0s <c.santiago.cruz@gmail.com> 1591810941 -0500
+
+An even stabler version of the website
+```
+
+This will output the commit ID associated with v2.0 along with the tag's name, author, creation date, and message. The straightforward relationship between tags and commits gives us our finalized Git object diagram.
+
+![Screen Shot 2020-07-19 at 12 53 00](https://user-images.githubusercontent.com/24994818/87881429-d43da380-c9be-11ea-81c1-7c840b66b37f.png)
+
+
+# 	* [Inspect Git's Branch Representation](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
+# 	* [Explore the Object Database](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
+# 	* [Collect the Garbage](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
+# 	* [Add Files to the index](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
+# 	* [Store the Index in the Database](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
+# 	* [Create a Commit Object](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
+# 	* [Update HEAD](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
+# 	* [Conclusion](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
+# 	* [Quick Reference](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
  
 
