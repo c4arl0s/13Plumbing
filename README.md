@@ -1,8 +1,8 @@
-# 13 [Go back to content](https://github.com/c4arl0s/RysGitTutorial#rysgittutorial)
+[Go back to content](https://github.com/c4arl0s/RysGitTutorial#rysgittutorial)
 
 13 Plumbing Rys Git Tutorial
 
-# 13. [Plumbing](https://github.com/c4arl0s/RysGitTutorial#13-plumbing-1)
+# 13. [Plumbing - Intro](https://github.com/c4arl0s/RysGitTutorial#13-plumbing-1)
  * [Examine Commit Details](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-examine-commit-details)	
  * [Examine a tree](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-examine-a-tree)
  * [Examine a Blob](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-examine-a-blob)
@@ -17,7 +17,7 @@
  * [Conclusion](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-conclusion)
  * [Quick Reference](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-quick-reference)
 
-# 13. [Plumbing](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
+# 13. [Plumbing - Intro](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
 
 In Rewriting History, I talked about the internal representation of a Git Repository. I may have mislead you a bit. While the reflog, interactive rebasing, end resetting may be more complex feature of Git, they are still considered part of the porcelain, as is every other command we have covered. In this module, we will take a look at Git's **plumbing** - The low level commands that give us access to Git's **true** internal representation of a project.
 
@@ -145,6 +145,86 @@ This will output the commit ID associated with v2.0 along with the tag's name, a
 
 
 # 	* [Inspect Git's Branch Representation](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
+
+We now have the tools to fully explore Git's branch representation. Using the **-t flag**, we can determine what kind of object Git uses for branches.
+
+```console
+Mon Jul 20 ~/iOS/RysGitTutorialRepository 
+$ git cat-file -t master
+commit
+```
+
+That's right, a branch is just a reference to a commit object, which means we can view it with a normal **git cat-file**
+
+```console
+Mon Jul 20 ~/iOS/RysGitTutorialRepository 
+$ git cat-file commit master
+tree c5ba33c4fdb6d0585fcb6f778b876daa30253067
+parent 56599780e162975562da46742664c1132a24b78e
+author c4arl0s <c.santiago.cruz@icloud.com> 1594256023 -0500
+committer c4arl0s <c.santiago.cruz@icloud.com> 1594256023 -0500
+
+Add .gitignore file
+```
+
+This will output the exact same information as our original **git cat-file commit HEAD**. It seems that both the **master branch** and **HEAD** are simply references to a commit object.
+
+Using a text editor, open up the **.git/refs/heads/master** file. You should find the commit checksum of the most recent commit, which you can view with **git log -n 1**.
+
+```console
+Mon Jul 20 ~/iOS/RysGitTutorialRepository 
+$ cat .git/refs/heads/master 
+da3867ee04234207430527875d5180cab83eb144
+```
+
+```console
+Mon Jul 20 ~/iOS/RysGitTutorialRepository 
+$ git log -n 1
+commit da3867ee04234207430527875d5180cab83eb144 (HEAD -> test, master)
+Author: c4arl0s <c.santiago.cruz@icloud.com>
+Date:   Wed Jul 8 19:53:43 2020 -0500
+
+    Add .gitignore file
+```
+
+This single file is all Git needs to maintain the **master** branch - all other information is extrapolated through the commit object relationships discussed above.
+
+The **HEAD** reference, on the other hand, is recorded in **.git/HEAD**. Unlike the branch tips, **HEAD** is not a direct link to a commit. Instead, it refers to a branch, which Git uses to figure out which commit is currently checked out. Remember that **detached HEAD** state ocurred when **HEAD** did not coincide with the tip of any branch. Internally, all this means to Git is that **.git/HEAD** does not contain a local branch. Try checking out an old commit:
+
+```console
+on Jul 20 ~/iOS/RysGitTutorialRepository 
+$ git checkout HEAD~1
+Note: switching to 'HEAD~1'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+
+HEAD is now at 5659978 Add a pink block of color
+```
+
+Now, **.git/HEAD** should contain a commit ID instead of a branch. This tells Git that we are in a detached HEAD state. Regardless of what state you are in, the **git checkout** comman will always record the checked-out reference in **.git/HEAD**. 
+
+Let's get back to our **master** branch before moving on:
+
+```console
+Mon Jul 20 ~/iOS/RysGitTutorialRepository 
+$ git checkout master
+Previous HEAD position was 5659978 Add a pink block of color
+Switched to branch 'master'
+```
+
 # 	* [Explore the Object Database](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
 # 	* [Collect the Garbage](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
 # 	* [Add Files to the index](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
