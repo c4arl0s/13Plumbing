@@ -1,8 +1,9 @@
-[Go back to content](https://github.com/c4arl0s/RysGitTutorial#rysgittutorial)
+# [Go back to content](https://github.com/c4arl0s/RysGitTutorial#rysgittutorial)
 
 13 Plumbing Rys Git Tutorial
 
-# 13. [Plumbing - Intro](https://github.com/c4arl0s/RysGitTutorial#13-plumbing-1)
+# 13. [Plumbing - Content]()
+ * [13. Plumbing - Intro]()
  * [Examine Commit Details](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-examine-commit-details)	
  * [Examine a tree](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-examine-a-tree)
  * [Examine a Blob](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-examine-a-blob)
@@ -17,9 +18,9 @@
  * [Conclusion](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-conclusion)
  * [Quick Reference](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-quick-reference)
 
-# 13. [Plumbing - Intro](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
+# 13. [Plumbing](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
 
-In Rewriting History, I talked about the internal representation of a Git Repository. I may have mislead you a bit. While the reflog, interactive rebasing, end resetting may be more complex feature of Git, they are still considered part of the porcelain, as is every other command we have covered. In this module, we will take a look at Git's **plumbing** - The low level commands that give us access to Git's **true** internal representation of a project.
+In Rewriting History, I talked about the internal representation of a Git Repository. I may have mislead you a bit. While the **reflog**, interactive rebasing, end resetting may be more complex feature of Git, they are still considered part of the porcelain, as is every other command we have covered. In this module, we will take a look at Git's **plumbing** - The low level commands that give us access to Git's **true** internal representation of a project.
 
 Unless you start hacking on Git's source code, you will probably never need to use the plumbing commands represented below. But, manually manipulating a repository will fill in the conceptual details of how Git actually stores your data, and you should walk away with a much better understanding of the techniques that we have been using throughout this tutorial. In turn, this knowledge will make the familiar porcelain commands even more powerful.
 
@@ -226,6 +227,36 @@ Switched to branch 'master'
 ```
 
 # 	* [Explore the Object Database](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
+
+While we have a basic understanding of Git's object interaction, we have yet to explore were Git keeps all of these objects. In your **RysGitTutorialRepository**, open the directory **.git/objects**. This is Git's object database.
+
+Each object, regardless of type, is stored as a file, using its **SHA-1** **checksum** as the filename (sort of). But, instead of sorting all objects in a single directory, they are split up using the first two characters of their ID as a directory name, resulting in an object database that looks something like the following.
+
+```console
+Tue Jul 21 ~/iOS/RysGitTutorialRepository 
+$ ls .git/objects/
+pack 3f   d5   e1   17   a7   a6   b9   e9   16   5d   32   37   18   95   3c   99   01
+info 0a   1b   27   4e   7d   3d   1e   70   f9   47   fb   d4   d6   c3   74   29   14
+26   06   c9   1a   2d   f4   f7   81   04   b6   3b   78   d9   40   43   72   a8
+c1   a2   d2   ce   20   de   35   71   eb   af   2f   1d   45   ca   69   50   3e
+bc   08   4a   e0   8d   6a   5a   d8   2b   91   a0   cc   36   c0   61   c5   bf
+e6   cb   10   49   5f   97   12   82   85   76   51   9b   6f   56   57   da   ed
+```
+
+For example, an object with the following ID:
+
+```console
+7a52bb857229f89bffa74134ee3de48e5e146105
+```
+is stored in a folder called **7a**, using the remaining characters (52bb8...) as a filename. This gives us an object ID, but before we can inspect items in the object database, we need to know what type of object it is. Again, we can use the **-t flag** 
+
+```console
+git cat-file -t 7a52bb8
+```
+
+My object was a blob, but yours may be different. If it is a tree, remember to use **git ls-tree** to turn that ugly binary data into a pretty directory listing.
+
+
 # 	* [Collect the Garbage](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
 # 	* [Add Files to the index](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
 # 	* [Store the Index in the Database](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
