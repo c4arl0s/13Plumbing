@@ -2,7 +2,7 @@
 
 13 Plumbing Rys Git Tutorial
 
-# 13. [Plumbing - Content]()
+# 13. [Plumbing - Content](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
  * [13. Plumbing - Intro]()
  * [Examine Commit Details](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-examine-commit-details)	
  * [Examine a tree](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-examine-a-tree)
@@ -18,7 +18,7 @@
  * [Conclusion](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-conclusion)
  * [Quick Reference](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-quick-reference)
 
-# 13. [Plumbing](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
+# 13. [Plumbing](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
 
 In Rewriting History, I talked about the internal representation of a Git Repository. I may have mislead you a bit. While the **reflog**, interactive rebasing, end resetting may be more complex feature of Git, they are still considered part of the porcelain, as is every other command we have covered. In this module, we will take a look at Git's **plumbing** - The low level commands that give us access to Git's **true** internal representation of a project.
 
@@ -26,7 +26,7 @@ Unless you start hacking on Git's source code, you will probably never need to u
 
 We will start by inspecting Git's object database, then we will manually create and commit a snapshot using only Git's low-level interface.
 
-# 	* [Examine Commit Details](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)	
+# 	* [Examine Commit Details](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)	
 
 First, lets take a closer look at our latest commit with the **git cat-file** plumbing command
 
@@ -51,7 +51,7 @@ A **tree object** is Git's representation of the **snapshot** we have been talki
 
 Notice that each commit refers to one and only one tree objects. Form the **git cat-file** output, we can also infer that trees use SHA-1 chechsums for their ID's. This will be the case for all of Git's internal objects.
 
-# 	* [Examine a tree](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
+# 	* [Examine a tree](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
 
 Next, let`s try to inspect a tree using the same **git cat-file** command. Make sure to change 
 
@@ -94,7 +94,7 @@ So, **blob objects** are how Git stores our file data, tree objects combine blob
 
 ![Screen Shot 2020-07-17 at 8 17 10](https://user-images.githubusercontent.com/24994818/87790269-ecb68e00-c805-11ea-92a9-50568665b06a.png)
 
-# 	* [Examine a Blob](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
+# 	* [Examine a Blob](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
 
 Let's take a look at the blob associated with **blue.html** (be sure to change the following to the ID next to **blue.html** in **your** tree output.
 
@@ -125,7 +125,7 @@ When it comes to blob objects, this has an additional benefit. Since two blobs w
 
 However, as soon as you change a single line in a file, Git must create a new blob object because its contents will have changed, resulting in a new SHA-1 checksum.
 
-# 	* [Examine a Tag](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
+# 	* [Examine a Tag](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
 
 The fourth and final type of Git object is the **tag object**. We can use the same **git cat-file** command to show the details of a tag.
 
@@ -145,7 +145,7 @@ This will output the commit ID associated with v2.0 along with the tag's name, a
 ![Screen Shot 2020-07-19 at 12 53 00](https://user-images.githubusercontent.com/24994818/87881429-d43da380-c9be-11ea-81c1-7c840b66b37f.png)
 
 
-# 	* [Inspect Git's Branch Representation](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
+# 	* [Inspect Git's Branch Representation](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
 
 We now have the tools to fully explore Git's branch representation. Using the **-t flag**, we can determine what kind of object Git uses for branches.
 
@@ -226,7 +226,7 @@ Previous HEAD position was 5659978 Add a pink block of color
 Switched to branch 'master'
 ```
 
-# 	* [Explore the Object Database](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
+# 	* [Explore the Object Database](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
 
 While we have a basic understanding of Git's object interaction, we have yet to explore were Git keeps all of these objects. In your **RysGitTutorialRepository**, open the directory **.git/objects**. This is Git's object database.
 
@@ -257,12 +257,31 @@ git cat-file -t 7a52bb8
 My object was a blob, but yours may be different. If it is a tree, remember to use **git ls-tree** to turn that ugly binary data into a pretty directory listing.
 
 
-# 	* [Collect the Garbage](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
-# 	* [Add Files to the index](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
-# 	* [Store the Index in the Database](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
-# 	* [Create a Commit Object](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
-# 	* [Update HEAD](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
-# 	* [Conclusion](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
-# 	* [Quick Reference](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
+# 	* [Collect the Garbage](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
+
+As your repository grows, Git may automatically transfer your object files into a more compact form know as a **"pack"** file. You can force this compression with the garbage collection command, but beware: this command is **undo-able**. If you want to continue exploring the contents of the **.git/objects folder**, you should do so before running the following command. Normal Git functionality will not be affected. 
+
+```console
+Wed Jul 22 ~/iOS/RysGitTutorialRepository 
+$ git gc
+Enumerating objects: 106, done.
+Counting objects: 100% (106/106), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (101/101), done.
+Writing objects: 100% (106/106), done.
+Total 106 (delta 47), reused 0 (delta 0)
+```
+
+This compress individual object files into a faster, smaller pack file and removes dangling commits (e.g. from a deleted, unmerge branch).
+
+Of course, all of the same object ID's will still work with **git cat-file**, and all of the porcelain commands will remain unaffected. The **git gc** command only changes Git's storage mechanism- not the contents of a repository. Running **git gc** every now and then is usually a good idea, as it keeps your repository optimized.
+
+
+# 	* [Add Files to the index](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
+# 	* [Store the Index in the Database](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
+# 	* [Create a Commit Object](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
+# 	* [Update HEAD](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
+# 	* [Conclusion](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
+# 	* [Quick Reference](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
  
 
