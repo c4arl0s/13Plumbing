@@ -276,8 +276,83 @@ This compress individual object files into a faster, smaller pack file and remov
 
 Of course, all of the same object ID's will still work with **git cat-file**, and all of the porcelain commands will remain unaffected. The **git gc** command only changes Git's storage mechanism- not the contents of a repository. Running **git gc** every now and then is usually a good idea, as it keeps your repository optimized.
 
-
 # 	* [Add Files to the index](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
+
+Thus far, we have been discussing Git's low-level representation of committed snapshots. The rest of this module will shift gears and use more **"plumbim"** commands to manually prepare and commit a new snapshot. This will give us an idea of how Git manages the working directory and the staging area.
+
+Create a new file called **news-4.html** in **RysGitTutorialRepositor** and add the following HTML.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Indigo Invasion</title>
+  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+</head>
+<body>
+  <h1 style="color: #A0C">Indigo Invasion</h1>
+  <p>Last week, a coalition of Asian designers, artists,
+  and advertisers announced the official color of Asia:
+  <span style="color: #A0C">Indigo</span>.</p>
+    
+  <p><a href="index.html">Return to home page</a></p>
+</body>
+</html>
+```
+
+Then, update the **index.html** **"News"** section o match the following.
+
+```html
+<h2 style="color: #C00">News</h2>
+<ul>
+  <li><a href="news-1.html">Blue Is The New Hue</a></li>
+  <li><a href="rainbow.html">Our New Rainbow</a></li>
+  <li><a href="news-2.html">A Red Rebellion</a></li>
+  <li><a href="news-3.html">Middle East's Silent Beast</a></li>
+  <li><a href="news-4.html">Indigo Invasion</a></li>
+</ul>”
+```
+
+Instead of **git add**, we will use the **low-level** **git update-index** command to add files to the staging area. The index is Git's term for the staged snapshot.
+
+```console
+Thu Jul 23 ~/iOS/RysGitTutorialRepository 
+$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   index.html
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	news-4.html
+
+no changes added to commit (use "git add" and/or "git commit -a")
+```
+
+```console
+Thu Jul 23 ~/iOS/RysGitTutorialRepository 
+$ git update-index index.html
+```
+
+```console
+Thu Jul 23 ~/iOS/RysGitTutorialRepository 
+$ git update-index news-4.html 
+error: news-4.html: cannot add to the index - missing --add option?
+fatal: Unable to process path news-4.html
+```
+
+The last command will throw an error - Git won't let you add a new file to the index without explicitly stating that it is a new file:
+
+```console
+Thu Jul 23 ~/iOS/RysGitTutorialRepository 
+$ git update-index --add news-4.html 
+```
+
+We have just moved the working directory into the index, which means we have a snapshot prepared for committal. However, the process will not be quite as simple as a mere **git commit**. 
+
 # 	* [Store the Index in the Database](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
 # 	* [Create a Commit Object](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
 # 	* [Update HEAD](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
