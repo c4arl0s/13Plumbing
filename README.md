@@ -503,8 +503,20 @@ Date:   Wed Jul 8 19:53:43 2020 -0500
 
 The last four sections explain everything that happes behind the scenes when we execute **git commit -a -m "Some Message"**. Aren't you glad you won't have to use Git's Plumbing ever again ?
 
+![Screen Shot 2020-07-24 at 16 31 36](https://user-images.githubusercontent.com/24994818/88437010-2883c180-cdcb-11ea-9781-bdbf25756b2f.png)
 
 # 	* [Conclusion](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
+
+After this module, you hopefully have a solid grasp of the object database that underlies almost every Git command. We examined commits, trees, blobs, tags, and branches, and we even created a commit object from scratch. All of this was meant to give you a deeper understanding of Git's porcelain commands, and you should now feel ready to adapt Git to virtually any task you could possibly demand from a version control system.
+
+As you migrate these skills to real-world projects, remember that git is merely a tool for tracking your files, not a cure-all for managing software projects. No amount of intimate Git knowledge can make up a haphazard set of conventions within a development team.
+
+Thus includes our journey through Git-based revision control. This tutorial was meant to prepare you for the realities of distributed software development - not to transform you into a Git expert overnight. You should be able to manage your own projects, collaborate with other Git users, and, perhaps most importantly, understand exactly what any other piece of Git documentation is trying to convey.
+
+Your job now is to take these skills and apply them to new projects, sift through complex histories that you have never seen before, talk to other developers about their Git workflows, and take the time to actually try all of those **"I wonder what would have happen if..."** scenarios. Good Luck!!
+
+For questions, comments, or suggestions, please contact us.
+
 # 	* [Quick Reference](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
  
 
