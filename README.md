@@ -429,6 +429,81 @@ You will now be able to find this commit in **.git/objects, but neither HEAD nor
 ![Screen Shot 2020-07-24 at 16 06 40](https://user-images.githubusercontent.com/24994818/88435380-b1006300-cdc7-11ea-83b7-0d14275d8862.png)
 
 # 	* [Update HEAD](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
+
+Since we are not in a **detached HEAD** state, **HEAD** is a reference to a branch. So, all we need to do to update **HEAD** is move the **master branch** forward to our new commit object. Using a txt editor, replace the contents of **git/refers/heads/master** with the output from **git commit-tree** in the previous step.
+
+In this example there is no master file
+
+```console
+Fri Jul 24 ~/iOS/RysGitTutorialRepository 
+$ cat .git/refers/head/master
+cat: .git/refers/head/master: No such file or directory
+```
+
+If this file seems to have disappeared, don't fret! This just means that the **git gc** command packed up al of our branch references into single file. 
+
+Instead of **.git/refers/heads/master**, open up **.git/packed-refs**, find the line with **refs/heads/master**, and change the ID to the left of it.
+
+```console
+Fri Jul 24 ~/iOS/RysGitTutorialRepository 
+$ cat .git/packed-refs 
+# pack-refs with: peeled fully-peeled sorted 
+da3867ee04234207430527875d5180cab83eb144 refs/heads/master
+da3867ee04234207430527875d5180cab83eb144 refs/heads/test
+a002c653723d7683a8a039b660e1818336a2df59 refs/remotes/john/master
+51f9d9e84c2e10e5ac859f2c8a6c4ac66ed39b17 refs/remotes/john/pink-page
+56599780e162975562da46742664c1132a24b78e refs/remotes/origin/master
+bfa55aa42e51e450336c12f91897d6c12a88f5b5 refs/stash
+61cb509a5d2d9a771034370cace5c807327a84c6 refs/tags/v1.0
+^453c8a4db079c3d235e3470754a79a22ea0f0afd
+3da40702e43f277667e5816f14aebfb8bc4ffd1e refs/tags/v2.0
+^49baa6e81a7ad87714540ec9ce9fceaaa12409c1
+```
+
+```console
+Fri Jul 24 ~/iOS/RysGitTutorialRepository 
+$ vim .git/packed-refs 
+```
+
+```console
+Fri Jul 24 ~/iOS/RysGitTutorialRepository 
+$ cat .git/packed-refs 
+# pack-refs with: peeled fully-peeled sorted 
+99a52ee48ef0f382e1af77fa58a12d6cdcc1b093 refs/heads/master
+da3867ee04234207430527875d5180cab83eb144 refs/heads/test
+a002c653723d7683a8a039b660e1818336a2df59 refs/remotes/john/master
+51f9d9e84c2e10e5ac859f2c8a6c4ac66ed39b17 refs/remotes/john/pink-page
+56599780e162975562da46742664c1132a24b78e refs/remotes/origin/master
+bfa55aa42e51e450336c12f91897d6c12a88f5b5 refs/stash
+61cb509a5d2d9a771034370cace5c807327a84c6 refs/tags/v1.0
+^453c8a4db079c3d235e3470754a79a22ea0f0afd
+3da40702e43f277667e5816f14aebfb8bc4ffd1e refs/tags/v2.0
+^49baa6e81a7ad87714540ec9ce9fceaaa12409c1
+```
+
+Now that our **master branch** points to the new commit, we should b able to see the **news-4.html** file in the project history.
+
+```console
+Fri Jul 24 ~/iOS/RysGitTutorialRepository 
+$ git log -n 2
+commit 99a52ee48ef0f382e1af77fa58a12d6cdcc1b093 (HEAD -> master)
+Author: c4arl0s <c.santiago.cruz@icloud.com>
+Date:   Fri Jul 24 16:04:26 2020 -0500
+
+    Add 4tth news item
+
+commit da3867ee04234207430527875d5180cab83eb144 (test)
+Author: c4arl0s <c.santiago.cruz@icloud.com>
+Date:   Wed Jul 8 19:53:43 2020 -0500
+
+    Add .gitignore file
+```
+
+![Screen Shot 2020-07-24 at 16 27 24](https://user-images.githubusercontent.com/24994818/88436799-b1e6c400-cdca-11ea-88bf-c50a8b2d3836.png
+
+The last four sections explain everything that happes behind the scenes when we execute **git commit -a -m "Some Message"**. Aren't you glad you won't have to use Git's Plumbing ever again ?
+
+
 # 	* [Conclusion](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
 # 	* [Quick Reference](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
  
