@@ -396,8 +396,37 @@ So, we have our tree object, but we have yet to add it to the project history.
 
 # 	* [Create a Commit Object](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
 
+To commit the new tree object, we need to manually figure out the ID of the parent commit.
 
+```console
+Fri Jul 24 ~/iOS/RysGitTutorialRepository 
+$ git log --oneline -n 1
+```
 
+This will output the following line, though your commit ID will be different. We will use this ID to specify the parent of our new commit object.
+
+```console
+da3867e (HEAD -> master, test) Add .gitignore file
+```
+
+The **git commit-tree** command creates a commit object from a tree and a parent ID, while the author information is taken from an environment variable set by Git. Make sure to change **0caa26d** to your tree ID, and **da3867e** to your most recent commit ID.
+
+```console
+Fri Jul 24 ~/iOS/RysGitTutorialRepository 
+$ git commit-tree 0caa26d -p da3867e
+Add 4tth news item
+99a52ee48ef0f382e1af77fa58a12d6cdcc1b093
+```
+
+This command will wait for more input: the commit message. Type Add 4th news item and press Enter to create the commit message, then Ctrl-Z and Enter for Windows or Ctrl-D for Unix to spcify and "End-of-file" character to end the input. Like the **git write-tree** command, this will output the ID of the resulting commit object.
+
+```console
+99a52ee48ef0f382e1af77fa58a12d6cdcc1b093
+```
+
+You will now be able to find this commit in **.git/objects, but neither HEAD nor the branches have been updated to include this commit, It is a **dangling commit** at this point. Fortunately for us, we know where Git stores its branch information.
+
+![Screen Shot 2020-07-24 at 16 06 40](https://user-images.githubusercontent.com/24994818/88435380-b1006300-cdc7-11ea-83b7-0d14275d8862.png)
 
 # 	* [Update HEAD](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
 # 	* [Conclusion](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
