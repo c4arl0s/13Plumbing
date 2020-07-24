@@ -354,7 +354,51 @@ $ git update-index --add news-4.html
 We have just moved the working directory into the index, which means we have a snapshot prepared for committal. However, the process will not be quite as simple as a mere **git commit**. 
 
 # 	* [Store the Index in the Database](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
+
+Remember that all Commits refer to a tree object, which represents the snapshot for that commit. So, before creating a commit object, we need to add our index (the staged tree) to Git's object database. We can do this with the following command.
+
+```console
+Fri Jul 24 ~/iOS/RysGitTutorialRepository 
+$ git write-tree
+```
+
+This command creates a tree object from the index and stores it in **.git/objects**. It will output the ID of the resulting tree (yours may be different):
+
+```console
+Fri Jul 24 ~/iOS/RysGitTutorialRepository 
+$ git write-tree
+0caa26d27ad464ac2dc6e90741cc5d06020def9e
+```
+
+You can examine your new snapshot with **git ls-tree**. Keep in mind that the only new blobs created for this commit were index.html and news-4.html. The rest of the three contains references to existing blobs.
+
+```console
+Fri Jul 24 ~/iOS/RysGitTutorialRepository 
+$ git ls-tree 0caa26d
+100644 blob 99ed0d431c5a19f147da3c4cb8421b5566600449	.gitignore
+040000 tree e0b8e25c9fb46e22f593df2a63a9e0a60053c07f	about
+100644 blob 370563f1b719233e5d5a21914bb82e696af7cb4f	blue.html
+100644 blob 822e2cb2140bba69f4bd72fac43941360f5564f6	green.html
+100644 blob d5411e19a037ba8e4bda22fc2eca0989a5df7899	index.html
+100644 blob 76db2ad3de2b0071654800cc57d5f3ee365fdcad	news-1.html
+100644 blob 1ddbdae80b47e69d7ee5fd2648d110cd24d8a4be	news-2.html
+100644 blob 450c33335098bd424c842d69fe55747a8211cfad	news-3.html
+100644 blob 64887ccefbf12890e4a1fa91808108e1fff6237b	news-4.html
+100644 blob ebe83105d77abe3ed420eea5616cc50858b38bbe	orange.html
+100644 blob 431492b9a3943abe5cd02e5db1bf5050ee2b0bfd	pink.html
+100644 blob a8533b314d359238f099413a7caddfb1cf1834ee	rainbow.html
+100644 blob 70ce141cd1e36585441e1f8e2879f7ade6fa87fa	red.html
+100644 blob 18bfc77ac5d8cd0da8e478cb3e6fdfb1e76a9c0d	style.css
+100644 blob e9d1781fd949fd41d2439ae3824a293531bc38a5	yellow.html
+```
+
+So, we have our tree object, but we have yet to add it to the project history.
+
 # 	* [Create a Commit Object](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
+
+
+
+
 # 	* [Update HEAD](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
 # 	* [Conclusion](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
 # 	* [Quick Reference](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
