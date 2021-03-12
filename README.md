@@ -1,9 +1,6 @@
-# [Go back to content](https://github.com/c4arl0s/RysGitTutorial#rysgittutorial)
+# [Go back to content](https://github.com/c4arl0s/RysGitTutorial#rys-git-tutorial)
 
-13 Plumbing Rys Git Tutorial
-
-# 13. [Plumbing - Content](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing)
- * [13. Plumbing - Intro]()
+# [13 Plumbing - Content](https://github.com/c4arl0s/13PlumbingRysGitTutorial#go-back-to-content)
  * [Examine Commit Details](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-examine-commit-details)	
  * [Examine a tree](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-examine-a-tree)
  * [Examine a Blob](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-examine-a-blob)
@@ -18,7 +15,7 @@
  * [Conclusion](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-conclusion)
  * [Quick Reference](https://github.com/c4arl0s/13PlumbingRysGitTutorial#-quick-reference)
 
-# 13. [Plumbing](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
+# [13 Plumbing](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
 
 In Rewriting History, I talked about the internal representation of a Git Repository. I may have mislead you a bit. While the **reflog**, interactive rebasing, end resetting may be more complex feature of Git, they are still considered part of the porcelain, as is every other command we have covered. In this module, we will take a look at Git's **plumbing** - The low level commands that give us access to Git's **true** internal representation of a project.
 
@@ -519,4 +516,40 @@ For questions, comments, or suggestions, please contact us.
 
 # 	* [Quick Reference](https://github.com/c4arl0s/13PlumbingRysGitTutorial#13-plumbing---content)
  
+```console
+$ git cat-file type objectID
+```
+Display the specified object, where type is one of commit, tree, blob, or tag.
+
+```console
+$ git cat-file -t objectID
+```
+Output the type of the specified object.
+
+```console
+$ git ls-tree treeID
+```
+Display a pretty version of the specified tree objects.
+
+
+```console
+git gc
+```
+Perform a garbage collection on the object database.
+
+```console
+git update-index --add file
+```
+Stage the specified file, using the optional --add flag to denote a new untracked file.
+
+```console
+git write-tree
+```
+Generate a tree from the index and store it in the object data-base. Returns the ID of the new tree object.
+
+```console
+git commit-tree treeID -p parentID
+```
+Create a New commit object from the given tree object and parent commit. Returns the ID of the new commit object.
+
 
